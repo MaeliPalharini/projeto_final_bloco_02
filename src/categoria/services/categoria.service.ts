@@ -32,10 +32,16 @@ export class CategoriaService {
         if (!nome) {
             throw new BadRequestException('O nome da categoria é obrigatório');
         }
-        return this.categoriaRepository.find({
+
+        const categorias = await this.categoriaRepository.find({
             where: { nome: Like(`%${nome}%`) },
             order: { nome: 'ASC' },
         });
+
+        if (categorias.length === 0) {
+            throw new NotFoundException('Nenhuma categoria encontrada para esse nome.');
+        }
+        return categorias;
     }
 
     async update(id: number, categoria: Categoria): Promise<Categoria> {

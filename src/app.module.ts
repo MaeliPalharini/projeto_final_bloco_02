@@ -3,6 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {CategoriaModule} from "./categoria/categoria.module";
 import {Categoria} from "./categoria/entities/categoria.entity";
+import {Produto} from "./produto/entities/produto.entity";
+import { ProdutoModule } from './produto/produto.module';
 
 @Module({
     imports: [
@@ -17,10 +19,11 @@ import {Categoria} from "./categoria/entities/categoria.entity";
                 password: cfg.get('DB_PASSWORD'),
                 database: cfg.get('DB_DATABASE'),
                 synchronize: cfg.get('DB_SYNC') === 'true',
-                entities: [Categoria]
+                entities: [Categoria, Produto]
             }),
         }),
         CategoriaModule,
+        ProdutoModule,
     ],
 })
 export class AppModule {}

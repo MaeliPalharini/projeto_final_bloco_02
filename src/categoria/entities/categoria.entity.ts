@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import {Produto} from "../../produto/entities/produto.entity";
 
 @Entity('categorias')
 export class Categoria {
@@ -17,4 +18,7 @@ export class Categoria {
     @IsOptional()
     @MaxLength(255)
     descricao?: string;
+
+    @OneToMany(() => Produto, (produto) => produto.categoria)
+    produtos?: Produto[];
 }
